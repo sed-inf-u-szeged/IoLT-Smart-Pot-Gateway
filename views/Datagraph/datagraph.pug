@@ -1,0 +1,64 @@
+doctype html5
+html(lang="en")
+  head
+    title= title
+    link(rel="icon" type="image/x-icon" href="../images/favicon.ico")
+    link(rel='stylesheet', href='../css/dashboard.css')
+    link(rel='stylesheet', href='../css/Datagraph/datagraph.css')
+    link(href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Raleway|Montserrat|Slabo+27px" rel="stylesheet")
+
+    link(rel='stylesheet', href='../css/rickshaw/rickshaw.min.css')
+    link(rel='stylesheet', href='https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css')
+    link(href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet")
+
+
+    script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js')
+    script(type='text/javascript').
+      var measured_data =!{JSON.stringify(dataArray)}
+    script(type='text/javascript', src='../js/Query/Datagraph/datagraph.js')
+
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js")
+    script(type='text/javascript', src='../js/d3/d3.v3.js')
+    script(type='text/javascript', src='../js/rickshaw/rickshaw.min.js')
+    
+    img.ioticon(src="../images/teszt.png", alt="SZTE logo")
+    img.ioticon(src='../images/szbk_icon.png', alt='SZBK Ikon')
+
+
+
+
+
+  body
+    h1.iottext.iothead=title
+    article
+      section
+        h2= projectName
+      section#selectionArea
+        div#selectionInnerBox
+          div#deviceSelectLine
+            label(for="selectedDevice") Please, select a device:
+            select(class="js-example-basic-single" name="selectedDevice" required)
+              option(value="" disabled hidden selected) Please, select a device
+                for device in deviceArray
+                  option(value=device) #{device}
+          br
+          div#sensorControlPanel
+            div#sensorTextArea
+              p Sensor Control Panel:
+            div#legendArea
+      section#graphArea
+        div#graphContainer
+          div#current_y_axis
+          div#currentGraph
+        div#graph_slider
+        div#downloadContainer
+          p Download selected data on graph:
+          form(action="/lekerdezes/downloadDataInFile", method="post")
+            input#renderedData(type="hidden", name="dataArray", value="")
+            input#renderedSensors(type="hidden", name="sensorArray", value="")
+            button(type="submit") Download
+      
+    footer
+      button#return_button(type="button") Back
+        

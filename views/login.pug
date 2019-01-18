@@ -1,0 +1,30 @@
+extends layout
+
+
+block content 
+
+  link(rel='stylesheet', href='css/extensions.css?v=2')
+  link(rel='stylesheet', href='css/lekerdezes.css')
+  link(rel="icon" type="image/x-icon" href="images/favicon.ico")
+  link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Montserrat|Slabo+27px")
+  link(rel='stylesheet', href='css/login.css')
+
+  section#felsoresz
+    h1 Login page
+    p Authorization required!
+    p Please, log in using the form below.
+
+
+  section#alsoresz
+    form(action="/dashboard" method="POST")
+      label#felhnevlabel(for="felhnev") Username:
+      br
+      input#felhnevmezo(type="text" name='felhnev')
+      br
+      label#jelszolabel(for="jelszo") Password:
+      br
+      input#jelszomezo(type="password" name='jelszo')
+      br
+      button#lekeres_gomb(type="submit") Login
+
+  script(type='text/javascript', src='js/login.js')

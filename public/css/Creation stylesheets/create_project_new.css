@@ -1,0 +1,166 @@
+.mainsection{
+    text-align:center;
+    margin-bottom: 3%;
+}
+.mainsection h1{
+    font-size: 30px;
+    font-family: 'Montserrat', sans-serif;
+}
+.mainsection p {
+    font-size: 18px;
+    font-family: 'Slabo 27px', serif;
+}
+.formsection{
+    margin: auto;
+    border: 1px solid;
+    min-height: 550px;
+    width: 900px;
+}
+.formsection h2 {
+    font-family: 'Roboto', serif;
+    text-align: center;
+    border-bottom: 1px dotted;
+    padding-bottom: 15px;
+    letter-spacing: 13px;
+    font-size: 25px;
+}
+.textInput {
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 1px dotted;
+}
+input[name='project_name'] {
+    width: 300px;
+    height: 40px;
+    text-align: center;
+    border: 1px solid;
+    border-radius: 4px;
+    font-family: 'Raleway';
+    font-size: 14px;
+}
+.selectionBox {
+    padding-bottom: 20px;
+    border-bottom: 1px dotted;
+}
+#select2owner{
+    padding-top: 20px;
+    text-align: center;
+}
+label {
+    display: block;
+    font-family: 'Quicksand';
+}
+select[name="owners"]{
+    width: 50%;
+    display: block;
+}
+.select2-selection--multiple{
+    overflow: hidden !important;
+    height: auto !important;
+}
+select option {
+    text-align: center;
+}
+#datecontainer{
+    padding-top: 20px;
+    width: auto;
+    min-height: 100px;
+    border-bottom: 1px dotted;
+}
+#startdatecontainer {
+    min-width: 450px;
+    float: left;
+    text-align: center;
+}
+#enddatecontainer {
+    min-width: 450px;
+    float: right;
+    text-align: center;
+}
+.dateinput{
+    text-align: center;
+    font-family: 'Raleway';
+    font-size: 14px;
+
+    width: 300px;
+    height: 40px;
+
+    border: 1px solid;
+    border-radius: 4px;
+}
+#additionalinfocontainer{
+    text-align : center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px dotted;
+}
+textarea {
+    resize:none;
+    font-family: 'Montserrat', sans-serif;
+
+    padding: 12px 20px;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+textarea:focus {
+    border: 3px solid #555;
+}
+#select2raspb{
+    padding: 20px 20px 20px 20px;
+    border-bottom: 1px dotted;
+    text-align: center;
+}
+
+select[name="raspberries"] {
+    width: 53%;
+}
+#buttonBox{
+    text-align: center;
+    margin-top: 10px;
+}
+button{
+    background-color: #4CAF50; 
+    border: none;
+    color: white;
+    padding: 8px 20px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+button[type="reset"] {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #f44336;
+    margin-right: 5%;
+}
+button[type="reset"]:hover {
+    background-color: #f44336;
+    color: white;
+}
+button[type="submit"] {
+    background-color: white;
+    color: black; 
+    border: 2px solid #4CAF50;
+}
+button[type="submit"]:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+#return_button{
+    font-size: 16px;
+    padding: 10px 32px;
+
+    background-color: white;
+    color: black;
+    border: 2px solid #555555;
+}
+#return_button:hover{
+	background-color: #444444;
+    color: white;
+}

@@ -1,0 +1,61 @@
+extends ../layout
+
+block content
+
+  link(rel="stylesheet", href="css/Creation stylesheets/modify_project.css")
+  link(href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Raleway|Montserrat|Slabo+27px|Roboto|Quicksand" rel="stylesheet")
+
+  link(href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet")
+  link(rel="stylesheet", href="js/datetime/jquery.datetimepicker.min.css")
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js")
+  script(src="js/datetime/jquery.datetimepicker.full.min.js")
+
+  section.mainsection
+    h1 Welcome on the modify project page!
+    p This page is for modifying already existing projects.
+    p Currently running projects can not be altered in any way on this page.
+
+  section.formsection
+    h2 Modify project:
+    form(action="modify_project/modifyProject", method="post")
+      div.projectselectionBox
+        select(name="selectedProject" required)
+          option(value="" disabled selected hidden) Please, select a project.
+            for projectName in projects
+              option(value=projectName) #{projectName}
+      div.selectionBox
+        div#select2owner
+          label(for="owners") Select the participants of the project:
+          br
+          select(class="js-example-basic-multiple" name="owners" multiple="multiple")
+            option(value="" disabled hidden) Please, assign the participants.
+              for userName in userNamePool
+                option(value=userName) #{userName}
+      div#select2raspb
+        label(for="raspberries") Select the devices you want to associate with:
+        br
+        select(class="js-example-basic-multiple" name="raspberries" multiple="multiple")
+          option(value="" disabled hidden) Please, select the raspberries.
+            for raspberryName in raspberries
+              option(value=raspberryName) #{raspberryName}
+      div#datecontainer
+        #startdatecontainer
+          label(for="Start_date") Scheduled start date:
+          br
+          input.dateinput(type="text" name="Start_date")
+        #enddatecontainer
+          label(for="End_date") Scheduled end date:
+          br
+          input.dateinput(type="text" name="End_date")
+      div#additionalinfocontainer
+        label(for="projectinfo") You can write additional information about this new project here:
+        br
+        textarea(name="projectinfo", cols="90", rows="10")
+      div#buttonBox
+        button(type="reset") Reset
+        button(type="submit") Modify
+  
+  footer
+    button#return_button(type="button") Back
+
+  script(type='text/javascript', src='js/Creation/modify_project.js')

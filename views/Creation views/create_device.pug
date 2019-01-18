@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+
+  link(rel='stylesheet', href='css/Creation stylesheets/create_device.css')
+  link(href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Raleway|Montserrat|Slabo+27px" rel="stylesheet")
+ 
+  section
+    h1 Create device
+    p On this page, you can create new devices in the system.
+    p Please note that the Device name/ID must be unique.
+
+  section
+    form(action="/create_device/createNewDevice", method="post")
+      label#deviceNameLabel(for="devicename") Name/ID of the device:
+      br
+      input#deviceName(type="text" name='devicename')
+      br
+      button#reset_button(type="Reset") Reset
+      button#submit_button(type="submit") Create
+      
+
+  footer
+    button#return_button(type="button") Back
+
+
+  script(type='text/javascript', src='js/Creation/create_device.js')

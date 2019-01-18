@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  link(rel='stylesheet', href='css/raspberries.css')
+  link(href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Raleway|Montserrat|Slabo+27px" rel="stylesheet")
+
+
+
+  section
+    h1 List raspberries
+    p On this page, you can see the raspberries, and the projects they are currently associated with.
+    p You can select either 'partial list', to list every raspberry in the system, and all active projects they are currently associated with, or you can select 'full list', to 
+     | list only the project they are currently working on.
+    p Raspberries are listed in alphabetically ascending order, based on their name/id.
+
+  section
+      table(align='center')
+        tr
+          th Device name:
+          th Associated projects:
+          th Currently working on:
+          if userRole == 'admin'
+            th Delete
+          for raspberry in raspberries
+            tr
+              td= raspberry.Device_name
+              td= raspberry.Associated_projects
+              td= raspberry.Currently_working_on
+              if userRole == 'admin'
+                td
+                  form(action="raspberries/deleteDevice", method="post")
+                    input(type='submit', value='Delete')
+                    input(type='hidden', value=raspberry.Device_name, name='Delete_request')
+                    input(type="hidden", value=raspberry.Associated_projects, name='Associated_projects')
+
+  footer
+    button#return_button(type="button") Back
+
+  script(type='text/javascript', src='js/raspberries/raspberries.js')

@@ -1,0 +1,70 @@
+extends layout
+
+
+block content
+
+  link(rel='stylesheet', href='css/projektek.css')
+  link(href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Raleway|Montserrat|Slabo+27px" rel="stylesheet")
+
+
+  
+  
+  section
+    h1 List projects
+    p#welcome_message On this page, you can see information about projects. You can hover your mouse over the 'More info' part of each project to 
+      | see the short introduction about the project. You can also control your projects here, and list finished projects, too.
+
+  section#buttonsection
+    button.inline_button_menu(onclick="location.href='/projektek/current_projects'" type="button") Active projects
+    button.inline_button_menu(onclick="location.href='/projektek/finished_projects'" type="button") Finished projects
+
+
+
+  section
+    table
+      tr
+        th Name
+        th Owners
+        th Raspberries
+        th Info
+        th Start date
+        if listType == 2
+          th End date
+        if listType == 1
+          th End date
+          th End
+      
+      if listType == 1
+        for projekt in projektek_tomb
+          if projekt.isOver == false
+            tr
+              td= projekt.Name
+              td= projekt.Owner
+              td.raspitd= projekt.Raspberries
+              td.moreinfo(title=projekt.Info) More info 
+              td= projekt.Start_date
+              td= projekt.End_date
+              td
+                form#stopform(action="projektek/endProject", method="post")
+                  if projekt.isStarted == false || projekt.Raspberries.length == 0
+                    button(type='submit' disabled) End project
+                  else if projekt.isStarted == true && projekt.Raspberries.length > 0
+                    button(type='submit') End project
+                  input(type='hidden', value=projekt.Name, name='ended_project_name')
+                  input(type='hidden', value=projekt.Raspberries, name='ended_project_raspberries')
+      if listType == 2
+        for projekt in projektek_tomb
+          if projekt.isOver == true
+            tr
+              td= projekt.Name
+              td= projekt.Owner
+              td.raspitd= projekt.Raspberries
+              td.moreinfo(title=projekt.Info) More info 
+              td= projekt.Start_date
+              td= projekt.End_date
+
+
+  footer
+    button#return_button(type="button") Back
+
+  script(type='text/javascript', src='js/projects/listproject.js')

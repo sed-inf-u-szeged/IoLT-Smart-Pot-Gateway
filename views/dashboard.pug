@@ -1,0 +1,100 @@
+extends layout
+
+
+block content 
+
+  link(rel='stylesheet', href='css/rickshaw/rickshaw.min.css')
+
+  link(rel='stylesheet', href='css/extensions.css?v=2')
+  link(rel='stylesheet', href='https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css')
+
+  script(type='text/javascript', src='js/d3/d3.v3.js')
+  script(type='text/javascript', src='js/rickshaw/rickshaw.min.js')
+  script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js')
+  script(type='text/javascript', src='js/rickshaw/extensions.js')
+
+  section
+    a#kepnez_gomb(type="button" href="http://127.0.0.1/Filebrowser") Browse pictures
+    button.upper_menu_buttons#adatok_lekerdezese_gomb(type="button") Query data
+    button.upper_menu_buttons#projektek_gomb(type="button") List projects
+    button.upper_menu_buttons#raspberries_button(type="button") List raspberries
+    button.upper_menu_buttons#logout_button(type="button") Log out
+  if role == "admin"
+    section
+      button.lower_menu_buttons#create_device_button(type="button") Create device
+      button.lower_menu_buttons#create_project_button(type="button") Create project
+      button#modify_project_button(type="button") Modify project
+  
+  h2.iottext
+  #content
+  form#side_panel.iotsidepanel
+    div.devices
+      h1.devicesText Topic:
+      input(type='text').devicesSelect#deviceslist
+      button(type='button')#subscribebutton Subscribe
+    h1.iottext Data
+    section
+      #visualtype
+        input#realtime(type='radio', value='realtime', name='visualtype', checked="")
+        label.iotlabel(for="realtime") Live data-flow
+
+
+    h1.iottext Sensors
+    section
+      #legend
+    h1.iottext Type of data-diagram
+    section
+      #renderer_form.toggler
+        input#area(type="radio", name="renderer", value="area")
+        label(for="area") area
+        input#bar(type="radio", name="renderer", value="bar")
+        label(for="bar") bar
+        input#line(type="radio", name="renderer", value="line", checked="")
+        label(for="line") linear
+        input#scatter(type="radio", name="renderer", value="scatterplot")
+        label(for="scatter") scattered
+    h1.iottext Customize
+    section
+      #offset_form.iotoptionpanel
+        label(for="stack")
+          input#stack(type="radio", name="offset", value="zero")
+          span stack
+        label(for="stream")
+          input#stream(type="radio", name="offset", value="wiggle")
+          span stream
+        label(for="pct")
+          input#pct(type="radio", name="offset", value="expand")
+          span pct
+        label(for="value")
+          input#value(type="radio", name="offset", value="value", checked="")
+          span value
+      #interpolation_form.iotoptionpanel
+        label(for="cardinal")
+          input#cardinal(type="radio", name="interpolation", value="cardinal", checked="")
+          span cardinal
+        label(for="linear")
+          input#linear(type="radio", name="interpolation", value="linear")
+          span linear
+        label(for="step")
+          input#step(type="radio", name="interpolation", value="step-after")
+          span step
+        label(for="hidd")
+          input#hidd(type="radio", name="interpolation", value="", hidden="true")
+          span
+      
+    
+  #chart_container
+    #chart
+      .iotdashboardtext Currently, there is no device selected.
+      br
+      .iotdashboardtext Please select one to begin the graph-plot.
+      img.iotimages(src='images/iot_felho.svg', alt='Felho',align="middle")
+      img.iotimages(src='images/orange_chart.svg', alt='Graf',align="middle")
+    #timeline
+    #preview
+
+  
+  script(type='text/javascript', src='js/realtime/mqttws31.js')
+  script(type='text/javascript', src='js/realtime/realtime.js')
+  script(type='text/javascript', src='js/realtime/realtimeGraph.js')
+  script(type='text/javascript', src='js/uicontroller.js')

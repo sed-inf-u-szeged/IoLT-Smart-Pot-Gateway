@@ -1,0 +1,83 @@
+p {
+    font-family: 'Montserrat', sans-serif;
+}
+section h1{
+    font-size: 2.0em;
+    font-family: 'Slabo 27px', serif;
+}
+section form input,button{
+    font-family: 'Slabo 27px', serif;
+    text-align: center;
+}
+section form input{
+    padding: 4px 30px;
+    font-size: 18px;
+    margin-bottom: 14px;
+    margin-top: 8px;
+}
+section form button{
+    background-color: white; 
+    color: black; 
+    border: 2px solid #4CAF50;
+    padding: 6px 32px;
+    font-size: 16px;
+
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+section form button:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+footer button{
+	padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+
+	background-color: white;
+    color: black;
+    border: 2px solid #555555;
+}
+footer button:hover{
+	background-color: #444444;
+    color: white;
+}
+#felsoresz{
+    text-align: center;
+}
+#alsoresz{
+    text-align: center;
+}
+#projektneve{
+    font-family: 'Montserrat', italic;
+    font-size: 1.0em;
+}
+label[id='projektneve']{
+   display: block;
+   margin-bottom: 10px;
+}
+select[name='selectedProject']{
+    width: 15%;
+}
+#dateContainer{
+    
+    display: flex;
+    justify-content: center;
+}
+#startDateContainer{
+    margin-right: 5%;
+}
+#endDateContainer{
+
+}
+label{
+    font-family: 'Montserrat', italic;
+    font-size: 1.0em;
+}

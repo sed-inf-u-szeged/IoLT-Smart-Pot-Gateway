@@ -1,0 +1,120 @@
+.mainsection{
+    text-align:center;
+    margin-bottom: 3%;
+}
+.mainsection h1{
+    font-size: 30px;
+    font-family: 'Montserrat', sans-serif;
+}
+.mainsection p{
+    font-size: 18px;
+    font-family: 'Slabo 27px', serif;
+}
+.formsection{
+    margin: auto;
+    border: 1px solid;
+    min-height: 550px;
+    width: 900px;
+}
+.formsection h2 {
+    font-family: 'Roboto', serif;
+    text-align: center;
+    border-bottom: 1px dotted;
+    padding-bottom: 15px;
+}
+.selectionBox{
+    padding-bottom: 20px;
+    border-bottom: 1px dotted;
+}
+select{
+    width: 250px;
+    height: 40px;
+    font-size: 16px;
+    font-family: 'Slabo 27px', serif;
+    margin-left: 35.5%;
+    border: 1px solid;
+    border-style: line;
+    text-align: center;
+    text-align-last: center;
+}
+select[name="selectedUser"]{
+    margin-top: 20px;
+}
+select option {
+    text-align: center;
+}
+#checkboxContainer{
+    min-height: 300px;
+    padding: 20px 20px 20px 20px;
+    border-bottom: 1px dotted;
+}
+table{
+    width: 100%;
+    table-layout: fixed;
+    border: 1px solid;
+}
+td {
+    height: 58px;
+    border: 1px solid;
+    vertical-align: middle;
+    text-align: center
+}
+input[type="checkbox"]{
+    margin-right: 5px;
+}
+.checkboxlabels{
+    margin-right: 20px;
+    max-width: 117.4px;
+    overflow:auto;
+    display:inline-block;
+    text-overflow: inherit;
+    white-space: nowrap;
+}
+#buttonBox{
+    text-align: center;
+    margin-top: 10px;
+}
+button{
+    background-color: #4CAF50; 
+    border: none;
+    color: white;
+    padding: 8px 20px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+button[type="reset"] {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #f44336;
+    margin-right: 5%;
+}
+button[type="reset"]:hover {
+    background-color: #f44336;
+    color: white;
+}
+button[type="submit"] {
+    background-color: white;
+    color: black; 
+    border: 2px solid #4CAF50;
+}
+button[type="submit"]:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+#return_button{
+    font-size: 16px;
+    padding: 10px 32px;
+
+    background-color: white;
+    color: black;
+    border: 2px solid #555555;
+}
+#return_button:hover{
+	background-color: #444444;
+    color: white;
+}
