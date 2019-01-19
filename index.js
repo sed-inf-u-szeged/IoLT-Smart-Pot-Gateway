@@ -16,7 +16,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.set('trust proxy',1);
-app.use(session({secret: "#Kd8saodJLKSm492382kKSmx&@E^21KDltsdx#$$231Aa",
+app.use(session({secret: "#a2258kbCmcyP81#$$A+%##123klsTvx&@E^21KklfdXNvSMSKjeoweq125PPcbyx",
 resave:true,
 saveUninitialized:true,
 cookie: { secure: false, maxAge: 3000000 }
