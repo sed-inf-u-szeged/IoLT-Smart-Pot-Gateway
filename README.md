@@ -67,5 +67,5 @@ it is up and running.
 
 * [NodeJS](https://nodejs.org/en/) - The java-script runtime
 * [Express](https://expressjs.com/) - Web framework used with NodeJS
-* [Pug]https://pugjs.org/api/getting-started.html) - HTML renderer
+* [Pug](https://pugjs.org/api/getting-started.html) - HTML renderer
 * [Mongoose](https://mongoosejs.com/) - MongoDB communication interface
