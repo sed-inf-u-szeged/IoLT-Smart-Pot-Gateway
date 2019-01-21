@@ -87,7 +87,7 @@ host machine's port number 3000 to the container's port number 3000, specifies t
 After this, since the port number 3000 is binded to the recently created container on your host machine, if you refer to the port 3000 in any way and/or in any program, it will point to
 this container's port 3000.
 
-This means if you open a web browser, and type in: 'localhost:3000' for example, it will work exactly like the un-dockerized version of the gateway-program, but now the communication
+This means if you open a web browser, and type in: 'localhost:3000' to the URL bar, it will work exactly like the un-dockerized version of the gateway-program, but now the communication
 goes through the docker-environment. End-users notice nothing about this, though.
 
 
