@@ -80,11 +80,11 @@ docker run --name my-gateway-container --network my-network -p 3000:3000 -d my-g
 ```
 
 This command creates a copy of the software (container), with the name 'my-gateway-container', adds the container to the 'my-network' inner docker-network, binds the
-host machine's port number 3000 to the container's port number 3000, specifies to run the container as a daemon, and specifies the image file 'my-gateway-program' as its core.
+host machine's port number 3000 to the container's port number 3000, specifies to run the container as a daemon, and specifies the image 'my-gateway-program' as its core.
 
 
 
-After this, since the port number 3000 is binded to the recently created container on your host machine, if you refer to the port 3000 in any way and/or in any program, it will mean
+After this, since the port number 3000 is binded to the recently created container on your host machine, if you refer to the port 3000 in any way and/or in any program, it will point to
 this container's port 3000.
 
 This means if you open a web browser, and type in: 'localhost:3000' for example, it will work exactly like the un-dockerized version of the gateway-program, but now the communication
