@@ -51,6 +51,49 @@ Don't forget that since it is started in a terminal/command line window, the pro
 Open your favorite web browser, and type 'localhost:3000' or '127.0.0.1:3000' to the URL bar. If you see the log-in window,
 it is up and running.
 
+## Dockerizing
+
+To get more information about what docker is, please visit:
+
+https://www.docker.com/
+
+
+To dockerize the gateway-program, you are going to need a dockerfile. 
+
+You can make your own dockerfile for it, but it is recommended to use the one I provided in the 'extra' directory. Go to the 'extra/docker/'
+directory in your local copy, and copy or move the Dockerfile into the root directory.
+
+After it is done, open a terminal/command prompt in the root directory, and run the following command:
+
+```
+docker build -t my_gateway_program .
+```
+
+to build the docker image of the gateway-program. After it is done, your image's name will be: my_gateway_program.
+
+### Running a container from the image
+
+To get an example of the gateway-program running, we need to create a container from the previously created image. To do this, simply run the following command:
+
+```
+docker run --name my-gateway-container --network my-network -p 3000:3000 -d my-gateway-program
+```
+
+This command creates a copy of the software (container), with the name 'my-gateway-container', adds the container to the 'my-network' inner docker-network, binds the
+host machine's port number 3000 to the container's port number 3000, specifies to run the container as a daemon, and specifies the image file 'my-gateway-program' as its core.
+
+
+
+After this, since the port number 3000 is binded to the recently created container on your host machine, if you refer to the port 3000 in any way and/or in any program, it will mean
+this container's port 3000.
+
+This means if you open a web browser, and type in: 'localhost:3000' for example, it will work exactly like the un-dockerized version of the gateway-program, but now the communication
+goes through the docker-environment. End-users notice nothing about this, though.
+
+
+
+
+
 ## Built With
 
 * [NodeJS](https://nodejs.org/en/) - The java-script runtime
