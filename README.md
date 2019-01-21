@@ -1,22 +1,10 @@
-# Smart-pot Gateway
+# IoLT Smart Pot Gateway
 
-This project was started by the Hungarian Academy of Sciences, in collaboration with the University of Szeged. The goal of
-the project was to monitor and collect real-time data from different species of plants, which were implanted in a special
-kind of pot, embedded with sensors and a camera.
+The Internet of Living Things (IoLT) project was launched in 2017 to integrate IoT technological research with applied research on specific, biological applications, with the collaboration of the University of Szeged and the Biological Research Institute of the Hungarian Academy of Sciences. One of the goals of this project is to develop a low cost plant phenotyping platform for small sized plants. The proposed IoLT Smart Pot is capable of monitoring environmental parameters by sensors placed above the plants and into the pots. An IoT device based on a Raspberry Pi board is placed under a pot, and the sensors are connected to it. 
 
-It was a project that required at least 4 different kind of technology to use, a fraction out of one of those technologies was the gateway-program.
+This opensource project contains the IoT-Cloud gateway of our platform used for receiving, storing, visualizing and downloading the monitored parameters sent by the IoT devices of the pots.
 
-The gateway-program's objective in the project was to enable the researchers to look into the collected data on different kind
-of graphs, and also to manage projects that were using these smart-pots.
-
-One could argue that this is the "most important" part of the project, because this is what the researchers see and use.
-
-Since this whole project was specifically crafted and tailored around their requests, a lot of the components are following strict patterns.
-
-This means, for example that the database-names are already given, and are named after the organization.
-
-Please note, that the code of the gateway-program is here only for educative purposes. It is only a fraction of a way bigger
-project, with a lot more components, and does not work fully without them.
+It uses four different kinds of IoT and Cloud technology. The default component names (database, sensor, etc.) were named after the participating organizations. Please note, that the code of the gateway program is only for educational and academic purposes. It contains only a fraction of the IoLT project stack, it may not work fully without them.
 
 
 ## Getting Started
