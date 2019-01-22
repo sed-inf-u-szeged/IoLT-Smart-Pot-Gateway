@@ -1,0 +1,65 @@
+version: "3"
+services:
+  ######################
+  # Setup mongo container
+  ######################
+  mongodb:
+    restart: always
+    image: "mongo"
+    ports:
+      - "27017:27017"
+  ######################
+  # Setup node container
+  ######################
+  backend:
+    build: ./node-backend
+    restart: always
+    environment:
+      APP_SERVER_PORT: "6200"
+      MONGO_CONNECTION: "mongodb://mongodb/iotdataset"
+      DB_NAME: "iotdataset"
+      BUCKET_NAME: "gridfs_uploads"
+      SECRET: "yoursecretkey"
+    expose:
+      - "6200"
+    #volumes:
+    #  - ./node-backend:/usr/src/app
+    ports:
+      - "6200:6200"
+    command: npm start
+    depends_on:
+      - mongodb
+  ######################
+  # Setup react container
+  ######################
+  frontend:
+    build: ./react-frontend
+    restart: always
+    environment:
+      - REACT_APP_PORT="3000"
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
+    #volumes:
+    #  - ./react-frontend:/usr/src/app
+    links:
+      - backend
+    depends_on:
+      - backend
+    command: npm start
+  #### Innestõl a sajátom
+  ######################
+  # Setup mongodb container
+  ######################
+  mongodb:
+    build: ./extra/docker/mongo_docker
+    restart: always
+    #image: "mongo"
+    ports:
+      -   "27017:27017"
+    environment:
+      -  DEFAULT_USERNAME = "admin"
+      -  DEFAULT_PASSWORD = "admin"
+    
+      

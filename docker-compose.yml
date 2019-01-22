@@ -1,0 +1,15 @@
+version: "3"
+services:
+  #### Innestõl a sajátom
+  ######################
+  # Setup mongodb container
+  ######################
+  mongodb:
+    build: ./extra/docker/mongo_docker
+    restart: always
+    #image: "mongo"
+    ports:
+      -   "27017:27017"
+    environment:
+      -  DEFAULT_USERNAME = "admin"
+      -  DEFAULT_PASSWORD = "admin"
