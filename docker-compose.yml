@@ -11,5 +11,5 @@ services:
     ports:
       -   "27017:27017"
     environment:
-      -  DEFAULT_USERNAME = "admin"
-      -  DEFAULT_PASSWORD = "admin"
+      -  DEFAULT_USERNAME = ${ENV_DEFAULT_USERNAME}
+      -  DEFAULT_PASSWORD = ${ENV_DEFAULT_PASSWORD}

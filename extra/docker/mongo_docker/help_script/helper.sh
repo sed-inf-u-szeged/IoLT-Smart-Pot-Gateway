@@ -10,4 +10,4 @@ mongo SZBK-felhasznalok \
 mongo SZBK-felhasznalok \
         --host localhost \
         --port 27017 \
-        --eval 'db.Felhasznalok.insertOne({"username": "${DEFAULT_USERNAME}","password": "${DEFAULT_PASSWORD}", "role": "admin"})'
+        --eval "db.Felhasznalok.insertOne({'username': '${DEFAULT_USERNAME}','password': '${DEFAULT_PASSWORD}', 'role': 'admin'})"
