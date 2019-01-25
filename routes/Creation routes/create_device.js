@@ -17,7 +17,7 @@ router.get('/', function(req,res) {
 
 router.post('/createNewDevice', function(req,res) {
 
-	mongoose.connect("mongodb://172.16.0.2:27017/SZBK-raspik", { useNewUrlParser: true });
+	mongoose.connect("mongodb://172.16.0.3:27017/SZBK-raspik", { useNewUrlParser: true });
 	let db = mongoose.connection;
 
 	let raspberry_name_array = [];

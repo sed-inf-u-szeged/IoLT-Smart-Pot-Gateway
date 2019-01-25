@@ -1,10 +1,10 @@
 const mqtt = require('mqtt');
 
 const MongoClient = require('mongodb').MongoClient;
-const url = "mongodb://172.16.0.2:27017";
+const url = "mongodb://172.16.0.3:27017";
 
 // connect to the message server
-const client = mqtt.connect('mqtt://172.16.0.2:1883', {clientId: "data-saver"});
+const client = mqtt.connect('mqtt://172.16.0.3:1883', {clientId: "data-saver"});
 
 
 client.on('connect', () => {  
