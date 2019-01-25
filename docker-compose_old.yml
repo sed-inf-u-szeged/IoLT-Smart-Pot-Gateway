@@ -48,7 +48,7 @@ services:
     depends_on:
       - backend
     command: npm start
-  #### Innestõl a sajátom
+  #### Innestï¿½l a sajï¿½tom
   ######################
   # Setup mongodb container
   ######################
