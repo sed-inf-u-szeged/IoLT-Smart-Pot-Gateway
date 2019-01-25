@@ -4,15 +4,15 @@ services:
   ######################
   # Setup mongodb container
   ######################
-  mongodb:
-    build: ./extra/docker/mongo_docker
-    restart: always
-    #image: "mongo"
-    ports:
-      -   "27017:27017"
-    environment:
-      -  DEFAULT_USERNAME=${ENV_DEFAULT_USERNAME}
-      -  DEFAULT_PASSWORD=${ENV_DEFAULT_PASSWORD}
+  #mongodb:
+  #  build: ./extra/docker/mongo_docker
+  #  restart: always
+  #  #image: "mongo"
+  #  ports:
+  #    -   "27017:27017"
+  #  environment:
+  #    -  DEFAULT_USERNAME=${ENV_DEFAULT_USERNAME}
+  #    -  DEFAULT_PASSWORD=${ENV_DEFAULT_PASSWORD}
   gateway:
     build: ./extra/docker/gateway_docker
     restart: always
