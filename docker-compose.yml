@@ -14,22 +14,21 @@ services:
   ######################
   # Setup mongodb container
   ######################
-  #mongodb:
-  #  build: ./extra/docker/mongo_docker
-  #  restart: always
-  #  networks:
-  #    smartpot_network:
-  #      ipv4_address: 172.16.0.3
-  #  #image: "mongo"
-  #  ports:
-  #    -   "27017:27017"
-  #  environment:
-  #    -  DEFAULT_USERNAME=${ENV_DEFAULT_USERNAME}
-  #    -  DEFAULT_PASSWORD=${ENV_DEFAULT_PASSWORD}
+  mongodb:
+    build: ./extra/docker/mongo_docker
+    restart: always
+    networks:
+      smartpot_network:
+        ipv4_address: 172.16.0.3
+    #image: "mongo"
+    ports:
+      -   "27017:27017"
+    environment:
+      -  DEFAULT_USERNAME=${ENV_DEFAULT_USERNAME}
+      -  DEFAULT_PASSWORD=${ENV_DEFAULT_PASSWORD}
 networks:
   smartpot_network:
     driver: bridge
-    enable_ipv6: false
     ipam:
       driver: default
       config:
