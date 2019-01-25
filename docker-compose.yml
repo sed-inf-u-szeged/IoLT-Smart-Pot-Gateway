@@ -14,7 +14,7 @@ services:
   #    -  DEFAULT_USERNAME=${ENV_DEFAULT_USERNAME}
   #    -  DEFAULT_PASSWORD=${ENV_DEFAULT_PASSWORD}
   gateway:
-    build: ./extra/docker/gateway_docker
+    build: ./
     restart: always
     ports:
       - "3000:3000"
