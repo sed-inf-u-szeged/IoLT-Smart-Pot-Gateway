@@ -7,8 +7,8 @@ router.get('/',function(req,res){
     req.session.reload(function(){
         if(req.session.isAuthorized == true){
 
-            mongoose.connect("mongodb://127.0.0.1:27017/SZBK-raspik", { useNewUrlParser: true });
-            let usersDB = mongoose.createConnection("mongodb://127.0.0.1:27017/SZBK-felhasznalok", { useNewUrlParser: true });
+            mongoose.connect("mongodb://172.16.0.2:27017/SZBK-raspik", { useNewUrlParser: true });
+            let usersDB = mongoose.createConnection("mongodb://172.16.0.2:27017/SZBK-felhasznalok", { useNewUrlParser: true });
 
             let project_name_array = [];
             let raspberry_name_array = [];
@@ -161,7 +161,7 @@ router.post('/modifyProject',function(req,res){
 
     if(!not_fully_filled) {
 
-    mongoose.connect("mongodb://127.0.0.1:27017/SZBK-raspik", { useNewUrlParser: true });
+    mongoose.connect("mongodb://172.16.0.2:27017/SZBK-raspik", { useNewUrlParser: true });
 
         let project_Schema = mongoose.Schema({
         Name : String,

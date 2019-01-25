@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
 		var projects_array = []; // Created to contain queried projects.
         var raspberries_array = []; // Created to contain each raspberry, and all the projects each one is associated with as objects.
 
-            mongoose.connect("mongodb://127.0.0.1:27017/SZBK-raspik", { useNewUrlParser: true });
+            mongoose.connect("mongodb://172.16.0.2:27017/SZBK-raspik", { useNewUrlParser: true });
 
             let project_schema = mongoose.Schema({
             Name : String,
@@ -117,7 +117,7 @@ router.post('/deleteDevice',function(req,res) {
 
     // Erre még majd kell egy + kritérium, ha kész a projekt start-stop gomb kombó.
 
-    mongoose.connect("mongodb://127.0.0.1:27017/SZBK-raspik", { useNewUrlParser: true });
+    mongoose.connect("mongodb://172.16.0.2:27017/SZBK-raspik", { useNewUrlParser: true });
     let Device_schema = mongoose.Schema({
 		Device_name : String,
 		Associated_project : String

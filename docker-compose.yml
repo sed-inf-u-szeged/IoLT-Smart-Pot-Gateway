@@ -1,18 +1,6 @@
 ﻿version: "3"
 services:
   #### Innestől a sajátom
-  ######################
-  # Setup mongodb container
-  ######################
-  #mongodb:
-  #  build: ./extra/docker/mongo_docker
-  #  restart: always
-  #  #image: "mongo"
-  #  ports:
-  #    -   "27017:27017"
-  #  environment:
-  #    -  DEFAULT_USERNAME=${ENV_DEFAULT_USERNAME}
-  #    -  DEFAULT_PASSWORD=${ENV_DEFAULT_PASSWORD}
   gateway:
     build: ./
     restart: always
@@ -20,3 +8,24 @@ services:
       - "3000:3000"
     depends_on:
       - mongodb
+    networks:
+      myapp_default:
+        ipv4_address: 172.16.0.1
+  ######################
+  # Setup mongodb container
+  ######################
+  #mongodb:
+  #  build: ./extra/docker/mongo_docker
+  #  restart: always
+  #  networks:
+  #    myapp_default:
+  #      ipv4_address: 172.16.0.2
+  #  #image: "mongo"
+  #  ports:
+  #    -   "27017:27017"
+  #  environment:
+  #    -  DEFAULT_USERNAME=${ENV_DEFAULT_USERNAME}
+  #    -  DEFAULT_PASSWORD=${ENV_DEFAULT_PASSWORD}
+networks:
+  myapp_default:
+    driver: bridge

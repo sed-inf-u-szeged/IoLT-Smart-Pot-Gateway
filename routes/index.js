@@ -52,7 +52,7 @@ router.use('/modify_project', modify_project_routes);
 
         req.session.isAuthorized = false;
         
-        mongoose.connect("mongodb://127.0.0.1:27017/SZBK-felhasznalok", { useNewUrlParser: true }).catch(function(err){
+        mongoose.connect("mongodb://172.16.0.2:27017/SZBK-felhasznalok", { useNewUrlParser: true }).catch(function(err){
             res.send('Mongo-server is offline. Error message: '+ err);
         });
         let db = mongoose.connection;

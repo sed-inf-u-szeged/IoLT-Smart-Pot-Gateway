@@ -1,6 +1,6 @@
 {
   "name": "szbk-iot",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Éles verziója az SZBK-Gatewaynek. (Bármely gépről)",
   "main": "index.js",
   "dependencies": {

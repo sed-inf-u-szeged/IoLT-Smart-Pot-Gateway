@@ -13,7 +13,7 @@ router.get('/', function(req, res) {
 
         
 
-        mongoose.connect("mongodb://127.0.0.1:27017/SZBK-raspik", { useNewUrlParser: true });
+        mongoose.connect("mongodb://172.16.0.2:27017/SZBK-raspik", { useNewUrlParser: true });
         
         let projektsema = mongoose.Schema({
         Name : String,
@@ -78,7 +78,7 @@ router.post('/data_query', function(req, res) {
         console.log(Date.parse(req.body.data_from_date));
         console.log(Date.parse(req.body.data_until_date));
 
-        mongoose.connect("mongodb://127.0.0.1:27017/SZBK-adatok", { useNewUrlParser: true });
+        mongoose.connect("mongodb://172.16.0.2:27017/SZBK-adatok", { useNewUrlParser: true });
         let dataArray = [];
         let deviceArray = [];
         let sensorNameArray = [];

@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
 
         
 
-        mongoose.connect("mongodb://127.0.0.1:27017/SZBK-raspik", { useNewUrlParser: true });
+        mongoose.connect("mongodb://172.16.0.2:27017/SZBK-raspik", { useNewUrlParser: true });
         
         let projektsema = mongoose.Schema({
         Name : String,
@@ -94,7 +94,7 @@ router.get('/finished_projects',function(req,res){
 
 router.post('/endProject',function(req,res){
 
-    let connection = mongoose.createConnection("mongodb://127.0.0.1:27017/SZBK-raspik", { useNewUrlParser: true });
+    let connection = mongoose.createConnection("mongodb://172.16.0.2:27017/SZBK-raspik", { useNewUrlParser: true });
 
     let project_Schema = mongoose.Schema({
     Name : String,
