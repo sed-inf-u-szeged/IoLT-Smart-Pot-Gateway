@@ -26,6 +26,15 @@ services:
     environment:
       -  DEFAULT_USERNAME=${ENV_DEFAULT_USERNAME}
       -  DEFAULT_PASSWORD=${ENV_DEFAULT_PASSWORD}
+  mosquitto:
+    build: ./extra/docker/mosquitto_docker
+    restart: always
+    networks:
+      smartpot_network:
+      ipv4_address: 127.16.0.4
+      ports:
+        -   "1883:1883"
+        -   "9001:9001"
 networks:
   smartpot_network:
     driver: bridge
