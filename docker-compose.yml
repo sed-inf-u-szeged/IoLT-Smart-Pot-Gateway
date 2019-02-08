@@ -31,7 +31,7 @@ services:
     restart: always
     networks:
       smartpot_network:
-      ipv4_address: 127.16.0.4
+        ipv4_address: 127.16.0.4
       ports:
         -   "1883:1883"
         -   "9001:9001"
