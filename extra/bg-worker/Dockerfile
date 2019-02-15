@@ -22,4 +22,4 @@ RUN chmod +x /cron/cronstart.sh
 
 RUN /bin/bash -c "echo -e '*\t*\t*\t*\t*\t/cron/checkscript.sh' >> /var/spool/cron/crontabs/root"
 
-CMD /cron/cronstart.sh
+CMD ['crond','-l 2', '-f']
