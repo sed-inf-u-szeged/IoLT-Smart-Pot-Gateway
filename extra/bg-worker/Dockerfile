@@ -12,6 +12,6 @@ COPY ./project-management/start_projects.js ./project-management/end_projects.js
 
 COPY ./cron/checkscript.sh /cron/
 
-COPY ./cron/crontab /etc/cron.d/project-check
+RUN touch /valami.txt
 
-RUN chmod 0644 /etc/cron.d/project-check
+RUN crontab -l | { cat; echo "*       *       *       *       *       run-parts /cron"; } | crontab -
