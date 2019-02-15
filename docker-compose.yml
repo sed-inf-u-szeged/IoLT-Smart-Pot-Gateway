@@ -44,8 +44,8 @@ services:
     ports:
       -   "80:80"
     volumes:
-      -   Program-core:/var/www/html
-      -   Pictures:/var/www/html/Filebrowser/files
+      -   ./Program-core:/var/www/html
+      -   ./Pictures:/var/www/html/Filebrowser/files
 
 networks:
   smartpot_network:
