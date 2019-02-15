@@ -35,6 +35,18 @@ services:
     ports:
       -   "1883:1883"
       -   "9001:9001"
+  filebrowser:
+    build: ./extra/filebrowser
+    restart: always
+    networks:
+    smartpot_network:
+      ipv4_address: 172.16.0.5
+    ports:
+      -   "80:80"
+    volumes:
+      -   Program-core:/var/www/html
+      -   Pictures:/var/www/html/Filebrowser/files
+
 networks:
   smartpot_network:
     driver: bridge
