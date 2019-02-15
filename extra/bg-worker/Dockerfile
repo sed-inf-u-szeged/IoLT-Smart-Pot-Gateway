@@ -8,4 +8,4 @@ RUN npm install -g mongodb && npm install -g mqtt && npm install -g mongoose
 
 WORKDIR ./project-management
 
-COPY start_projects.js end_projects.js listener.js /nodefiles/
+COPY ./project-management/start_projects.js ./project-management/end_projects.js ./project-management/listener.js /nodefiles/
