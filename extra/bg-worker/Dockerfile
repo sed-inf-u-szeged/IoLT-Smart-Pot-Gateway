@@ -16,4 +16,4 @@ RUN touch /valami.txt
 
 RUN chmod +x /cron && chmod +x /cron/checkscript.sh
 
-RUN crontab -l | { cat; echo "*       *       *       *       *       run-parts /cron"; } | crontab -
+RUN crontab -l | { cat; echo "*       *       *       *       *       /cron/checkscript.sh\n"; } | crontab -
