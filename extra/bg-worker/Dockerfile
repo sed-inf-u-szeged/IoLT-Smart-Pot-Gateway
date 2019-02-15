@@ -14,4 +14,6 @@ COPY ./cron/checkscript.sh /cron/
 
 RUN touch /valami.txt
 
+RUN chmod +x /cron && chmod +x /cron/checkscript.sh
+
 RUN crontab -l | { cat; echo "*       *       *       *       *       run-parts /cron"; } | crontab -
