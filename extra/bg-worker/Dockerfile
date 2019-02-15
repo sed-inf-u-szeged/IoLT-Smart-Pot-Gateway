@@ -12,10 +12,14 @@ COPY ./project-management/start_projects.js ./project-management/end_projects.js
 
 COPY ./cron/checkscript.sh /cron/
 
+COPY ./cron/cronstart.sh /cron/
+
 RUN touch /valami.txt
 
 RUN chmod +x /cron && chmod +x /cron/checkscript.sh
 
+RUN chmod +x /cron/cronstart.sh
+
 RUN /bin/bash -c "echo -e '*\t*\t*\t*\t*\t/cron/checkscript.sh' >> /var/spool/cron/crontabs/root"
 
-ENTRYPOINT "crond" && "/bin/bash"
+CMD /cron/cronstart.sh
