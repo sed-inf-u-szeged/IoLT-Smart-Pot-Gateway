@@ -39,8 +39,8 @@ services:
     build: ./extra/filebrowser
     restart: always
     networks:
-    smartpot_network:
-      ipv4_address: 172.16.0.5
+      smartpot_network:
+        ipv4_address: 172.16.0.5
     ports:
       -   "80:80"
     volumes:
