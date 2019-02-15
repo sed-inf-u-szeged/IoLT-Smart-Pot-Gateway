@@ -4,10 +4,18 @@ RUN apk add bash && apk add nano
 
 ENV NODE_PATH /usr/lib/node_modules
 
-RUN /bin/bash -c "mkdir nodefiles"
-
 RUN npm install -g mongodb && npm install -g mqtt && npm install -g mongoose
 
-WORKDIR ./project-management
+RUN /bin/bash -c "mkdir nodefiles"
+
+RUN /bin/bash -c "mkdir cron"
 
 COPY ./project-management/start_projects.js ./project-management/end_projects.js ./project-management/listener.js /nodefiles/
+
+COPY ./cron/checkscript.sh /cron/
+
+COPY ./cron/crontab /etc/cron.d/project-check
+
+RUN chmod 0644 /etc/cron.d/project-check
+
+RUN service cron start
