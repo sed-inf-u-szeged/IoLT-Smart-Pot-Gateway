@@ -16,6 +16,6 @@ RUN touch /valami.txt
 
 RUN chmod +x /cron && chmod +x /cron/checkscript.sh
 
-RUN crontab -l | { cat; echo -e "*\t*\t*\t*\t*\t/cron/checkscript.sh\n"; } | crontab -
+RUN /bin/bash -c "echo -e '*\t*\t*\t*\t*\t/cron/checkscript.sh' >> /var/spool/cron/crontabs/root"
 
 RUN crond
