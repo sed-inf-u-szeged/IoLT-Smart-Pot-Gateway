@@ -1,5 +1,4 @@
 #!/bin/bash
 
-crond
-/cron/startlistening.sh
-tail -f /dev/null
+setsid /cron/startlistening.sh >/dev/null 2>&1 < /dev/null &
+crond && tail -f /dev/null
