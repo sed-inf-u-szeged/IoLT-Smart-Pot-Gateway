@@ -1,5 +1,5 @@
 #!/bin/bash
 
-touch siker.txt
+crond
 /cron/startlistening.sh
-crond && tail -f /dev/null
+tail -f /dev/null
