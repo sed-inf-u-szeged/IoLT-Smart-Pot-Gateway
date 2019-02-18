@@ -14,11 +14,15 @@ COPY ./cron/checkscript.sh /cron/
 
 COPY ./cron/cronstart.sh /cron/
 
+COPY ./cron/startlistening.sh /cron/
+
 RUN touch /valami.txt
 
 RUN chmod +x /cron && chmod +x /cron/checkscript.sh
 
 RUN chmod +x /cron/cronstart.sh
+
+RUN chmod +x /cron/startlistening.sh
 
 RUN /bin/bash -c "echo -e '*\t*\t*\t*\t*\t/cron/checkscript.sh' >> /var/spool/cron/crontabs/root"
 

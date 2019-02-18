@@ -1,5 +1,5 @@
 #!/bin/bash
 
 touch siker.txt
-./startlistening.sh
+/cron/startlistening.sh
 crond && tail -f /dev/null
