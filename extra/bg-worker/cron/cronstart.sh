@@ -1,5 +1,5 @@
 #!/bin/bash
 
 touch siker.txt
-node /nodefiles/listener.js
+./startlistening.sh
 crond && tail -f /dev/null
