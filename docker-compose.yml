@@ -46,6 +46,13 @@ services:
     volumes:
       -   ./extra/filebrowser/Program-core:/var/www/html
       -   ./extra/filebrowser/Pictures:/var/www/html/files
+  bg-worker:
+    build: ./extra/bg-worker
+    restart: always
+    networks:
+      smartpot_network:
+        ipv4_address: 172.16.0.6
+  
 
 networks:
   smartpot_network:

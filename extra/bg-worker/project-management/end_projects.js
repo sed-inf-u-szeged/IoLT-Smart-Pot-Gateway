@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 let currentdate = new Date();
 
-mongoose.connect("mongodb://127.0.0.1:27017/SZBK-raspik", { useNewUrlParser: true });
+mongoose.connect("mongodb://172.16.0.3:27017/SZBK-raspik", { useNewUrlParser: true });
 
 function asyncquery1 (Model) {
 	return new Promise(resolve => {
