@@ -24,6 +24,10 @@ RUN chmod +x /cron/cronstart.sh
 
 RUN chmod +x /cron/startlistening.sh
 
+RUN apk add --no-cache tzdata
+
+ENV TZ Europe/Budapest
+
 RUN /bin/bash -c "echo -e '*\t*\t*\t*\t*\t/cron/checkscript.sh' >> /var/spool/cron/crontabs/root"
 
 CMD ["/cron/cronstart.sh"]
