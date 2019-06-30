@@ -6,6 +6,8 @@ function initSelectors() {
 
     var selectedDeviceName;
 
+    let pg_currentstate = true;
+
     var select1check = false;
 
     var renderedData;
@@ -48,11 +50,6 @@ function initSelectors() {
             data: [{x:0,y:0}],
             name: "Full light intensity",
             color: "yellow"
-        },
-        {
-            data: [{x:0,y:0}],
-            name: "Plant growth",
-            color: "darkgreen"
         }]
     });
 
@@ -83,7 +80,7 @@ function initSelectors() {
                     modified_y = y + " lux";
                     break;
                 case "Plant growth":
-                    modified_y = y.toFixed(2) + " cm<sup>2</sup>";
+                    modified_y = y.toFixed(2) + " mm<sup>2</sup>";
                 default:
                     break;
             }
@@ -122,13 +119,72 @@ function initSelectors() {
         width: 200
     });
     
-    
+    $("select[name='selectedDevice']").on('select2:select', function (e) {
+        var data = e.params.data;
+        selectedDeviceName = e.params.data.text;
+        select1check = true;
+
+        if (selectedDeviceName == "BRC_Smartpot_1" && typeof plantgrowth_data !== 'undefined' && plantgrowth_data.length > 0) {
+            
+            pg_seriesObject = {
+                data: [{x:0,y:0}],
+                name: "Plant growth",
+                color: "darkgreen"
+            };
+            graph.series.push(pg_seriesObject);
+
+            // Rendering sensor control panel element, in the case it qualifies. Also adding the functions to interact with the graph.
+        var Sensorlist = document.getElementsByClassName("ui-sortable");
+        var li = document.createElement("li");
+        li.id = "plantgrowthentry";
+        li.classList.add("line", "ui-sortable-handle");
+        Sensorlist[0].appendChild(li);
+        $(plantgrowthentry).html('<class="line ui-sortable-handle disabled"><a class="action">✔</a><div class="swatch" style="background-color: darkgreen;"></div><span class="label">Plant growth</span></li>');
+        $(plantgrowthentry).click(function(){
+            console.log(slider);
+            console.log(graph)
+            // Do not let be disabled if all other sensors are disabled, because it creates an empty graph.
+            if ( ! isAllDisabled() ) {
+                plantGrowthToggleLogic(pg_currentstate,graph);
+                    if(pg_currentstate) {
+                        pg_currentstate = false;
+                        $(plantgrowthentry).addClass("disabled");
+                        sensorsObject["Plant growth"] = false;
+                        document.querySelector("#renderedSensors").value = JSON.stringify(sensorsObject);
+                } else {
+                    pg_currentstate = true;
+                    $(plantgrowthentry).removeClass("disabled");
+                    sensorsObject["Plant growth"] = true;
+                    document.querySelector("#renderedSensors").value = JSON.stringify(sensorsObject);
+                }
+        }
+        });
+            
+        } else if (graph.series.length == 8) {
+            graph.series.pop();
+            
+        };
+
+        
+        
+
+        if(select1check == true) {
+            console.log(graph.series);
+            initGraph(selectedDeviceName,graph);
+            graph.element.style.visibility = 'visible';
+            slider.element.style.visibility = 'visible';
+            document.querySelector('#downloadContainer').style.visibility = 'visible';
+            document.querySelector('#sensorControlPanel').style.display = 'block';
+        }
+
+      
+
+    });
 
 
     $( "#graph_slider" ).on( "slidechange", function( event, ui ) {
         renderedData = slider.graph.stackedData;
         document.querySelector("#renderedData").value = JSON.stringify(renderedData);
-        console.log(slider.graph);
     } );
 
     $("#return_button").click(function () {
@@ -155,10 +211,10 @@ function initSelectors() {
       let observer = new MutationObserver(function(mutations) {
         for (let i=0, mutation; mutation = mutations[i]; i++) {
             if( !(String(mutation.target.className).includes("disabled")) ){
-                //console.log(mutation.target.lastChild.innerText);
+                console.log(mutation.target.lastChild.innerText);
                 sensorsObject[mutation.target.lastChild.innerText] = true;
             } else {
-                //console.log(mutation.target.lastChild.innerText + " removed.");
+                console.log(mutation.target.lastChild.innerText + " removed.");
                 sensorsObject[mutation.target.lastChild.innerText] = false;
             }
             console.log(sensorsObject);
@@ -170,48 +226,14 @@ function initSelectors() {
       for (let i = 0; i < sensors.length; i++) {
           observer.observe(sensors[i], {attributes: true});
       }
-
-
-      $("select[name='selectedDevice']").on('select2:select', function (e) {
-        var data = e.params.data;
-        selectedDeviceName = e.params.data.text;
-        select1check = true;
-
-        console.log(graph);
-
-
-        if(select1check == true) {
-            console.log(graph.series);
-            initGraph(selectedDeviceName,graph,legend);
-            if ( ! (selectedDeviceName == "BRC_Smartpot_1" && typeof plantgrowth_data !== 'undefined' && plantgrowth_data.length > 0)) {
-            
-                $('.rickshaw_legend .line:nth-child(8)').attr('hidden','');
-                $('.rickshaw_legend .line:nth-child(8)').addClass('disabled');
-                graph.update();
-    
-            } else {
-                    $('.rickshaw_legend .line:nth-child(8)').removeAttr('hidden');
-                    $('.rickshaw_legend .line:nth-child(8)').removeClass('disabled');
-                    fillSeries_withPlantGrowthData(graph);
-                    graph.update();
-                } 
-            }
-            graph.element.style.visibility = 'visible';
-            slider.element.style.visibility = 'visible';
-            document.querySelector('#downloadContainer').style.visibility = 'visible';
-            document.querySelector('#sensorControlPanel').style.display = 'block';
-        
-
-      
-
-    });
       
 }
 
 
-function initGraph(Devicename,graph,legend) {
+function initGraph(Devicename,graph) {
 
     let tempdata = [];
+    let pg_data = [];
 
     for (let i = 0; i < 7; i++) {
         let t = [];
@@ -247,26 +269,24 @@ function initGraph(Devicename,graph,legend) {
     for (let i = 0; i < tempdata.length; i++) {
          graph.series[i].data = tempdata[i];
     }
-    
-    if (plantgrowth_data.length == 0) {
-        graph.series.pop();
-    } else {
-        graph.series[7].disable();
-    }
-    
 
-    if ( (Devicename == "BRC_Smartpot_1" && typeof plantgrowth_data !== 'undefined' && plantgrowth_data.length > 0) ) {
-        fillSeries_withPlantGrowthData(graph);
-            if(graph.series[0].data.length == 0 && graph.series[7].data.length != 0) {
-                onlyPgDataIsPresent(graph);
-        }
-        graph.series[7].enable();
-    } else {
-        if (graph.series[7] !== undefined) {
-            graph.series[7].data[0].x = graph.series[0].data[0].x;
-        }   
-    }
-    
+    if (typeof plantgrowth_data !== 'undefined' && plantgrowth_data.length > 0) {
+
+        plantgrowth_data.forEach(function(datablock) {
+            let y_data = 0;
+            for(var propertyName in datablock) {
+                if (propertyName != "Time" && propertyName != "_id") {
+                    y_data += datablock[propertyName];
+                }
+             }
+            y_data = y_data/12;
+            let o1 = {x: Math.floor((Date.parse(datablock.Time))/1000) , y: y_data};
+            pg_data.push(o1);
+
+    });
+
+    graph.series[7].data = pg_data;
+    };
 
     graph.render();
     
@@ -284,34 +304,52 @@ function initGraph(Devicename,graph,legend) {
 
 }
 
-function fillSeries_withPlantGrowthData(graph) {
+//Custom toggle logics from here:
 
-    let pg_data = [];
+function plantGrowthToggleLogic(currentstate,graph){
+    console.log("kattintottal");
 
-    plantgrowth_data.forEach(function(datablock) {
-        let y_data = 0;
-        for(var propertyName in datablock) {
-            if (propertyName != "Time" && propertyName != "_id") {
-                y_data += datablock[propertyName];
-            }
-        }
-        y_data = y_data/12;
-        let o1 = {x: Math.floor((Date.parse(datablock.Time))/1000) , y: y_data};
-        pg_data.push(o1);
-    });
+    if(currentstate){
+        graph.series.pop();
+        $("#plantgrowthentry").css("color","lightgrey");
+        graph.update();
+    } else {
+        graph.series.push()
+        refillPlantGrowthData(graph);
+        $("#plantgrowthentry").css("color","white");
+        graph.update();
+    }
+        
 
-    graph.series[7].data = pg_data;
 }
 
-function onlyPgDataIsPresent(graph) {
+function refillPlantGrowthData(graph) {
+    pg_data = [];
+    plantgrowth_data.forEach(function(data) {
         
-    let o1 = {x: graph.series[7].data[0].x, y: NaN};
+        let o1 = {x: Math.floor((Date.parse(data.Time))/1000) , y: data.Slot_1};
+        pg_data.push(o1);
 
-        for (let i = 0; i <= 6; i++) {
-            graph.series[i].data.push(o1);
-        }
-        for (let i = 0; i <= 6; i++) {
-            graph.stackedData[i].push(o1);
-        }
-        
+    });
+    pg_seriesObject = {
+        data: [{x:0,y:0}],
+        name: "Plant growth",
+        color: "darkgreen"
+    };
+    graph.series.push(pg_seriesObject);
+    console.log(graph.series)
+    graph.series[7].data = pg_data;
+
+}
+
+function isAllDisabled(){
+
+    let disabledCount = $(".disabled").length;
+
+    if ( disabledCount == 7 && !($(plantgrowthentry).hasClass("disabled")) ) {
+        return true;
+    } else {
+        return false;
+    }
+
 }

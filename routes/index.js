@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 
 var dashboard_routes = require('./dashboard');
 var lekerdezes_routes = require('./lekerdezes');
+var plant_growth_routes = require('./plant_growth');
 var projektek_routes = require('./projektek');
 var raspberries_routes = require('./raspberries');
 
@@ -19,6 +20,7 @@ var modify_project_routes = require('./Creation routes/modify_project');
 
 router.use('/dashboard', dashboard_routes);
 router.use('/lekerdezes', lekerdezes_routes);
+router.use('/plant_growth', plant_growth_routes);
 router.use('/projektek', projektek_routes);
 router.use('/raspberries', raspberries_routes);
 
@@ -51,7 +53,8 @@ router.use('/modify_project', modify_project_routes);
         req.session.reload(function(err) {
 
         req.session.isAuthorized = false;
-        
+
+        //172.16.0.3:27017 a dockeres ip.
         mongoose.connect("mongodb://172.16.0.3:27017/SZBK-felhasznalok", { useNewUrlParser: true }).catch(function(err){
             res.send('Mongo-server is offline. Error message: '+ err);
         });

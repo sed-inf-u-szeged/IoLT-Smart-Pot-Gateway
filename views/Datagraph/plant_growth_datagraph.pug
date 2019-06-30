@@ -4,7 +4,7 @@ html(lang="en")
     title= title
     link(rel="icon" type="image/x-icon" href="../images/favicon.ico")
     link(rel='stylesheet', href='../css/dashboard.css')
-    link(rel='stylesheet', href='../css/Datagraph/datagraph.css')
+    link(rel='stylesheet', href='../css/Datagraph/plant_growth_datagraph.css')
     link(href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Raleway|Montserrat|Slabo+27px" rel="stylesheet")
 
     link(rel='stylesheet', href='../css/rickshaw/rickshaw.min.css')
@@ -15,9 +15,8 @@ html(lang="en")
     script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
     script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js')
     script(type='text/javascript').
-      var measured_data =!{JSON.stringify(dataArray)}
-      var plantgrowth_data =!{JSON.stringify(plantgrowth_data)}
-    script(type='text/javascript', src='../js/Query/Datagraph/datagraph.js')
+      var measured_data =!{JSON.stringify(plant_growth_data)}
+    script(type='text/javascript', src='../js/Query/Datagraph/plant_growth_datagraph.js')
 
     script(src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js")
     script(type='text/javascript', src='../js/d3/d3.v3.js')
@@ -34,19 +33,19 @@ html(lang="en")
     h1.iottext.iothead=title
     article
       section
-        h2= projectName
+        h2 Plant Growth Analysis
       section#selectionArea
         div#selectionInnerBox
           div#deviceSelectLine
-            label(for="selectedDevice") Please, select a device:
-            select(class="js-example-basic-single" name="selectedDevice" required)
-              option(value="" disabled hidden selected) Please, select a device
-                for device in deviceArray
-                  option(value=device) #{device}
+            label(for="selected_slot") Please, select a smartpot slot:
+            select(class="js-example-basic-single" name="selected_slot" required)
+              option(value="" disabled hidden selected) Please, select a smartpot slot
+                for slot_num in slot_array
+                  option(value=slot_num) #{slot_num}
           br
           div#sensorControlPanel
             div#sensorTextArea
-              p Sensor Control Panel:
+              p Legend:
             div#legendArea
       section#graphArea
         div#graphContainer
@@ -55,10 +54,9 @@ html(lang="en")
         div#graph_slider
         div#downloadContainer
           p Download selected data on graph:
-          form(action="/lekerdezes/downloadDataInFile", method="post")
+          form(action="/plant_growth/downloadDataInFile", method="post")
             input#renderedData(type="hidden", name="dataArray", value="")
             input#renderedSensors(type="hidden", name="sensorArray", value="")
-            input#plantGrowth_Data(type="hidden", name="plantgrowth_data", value= plantgrowth_data)
             button(type="submit") Download
       
     footer

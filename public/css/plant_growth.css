@@ -55,17 +55,6 @@ footer button:hover{
 #alsoresz{
     text-align: center;
 }
-#projektneve{
-    font-family: 'Montserrat', italic;
-    font-size: 1.0em;
-}
-label[id='projektneve']{
-   display: block;
-   margin-bottom: 10px;
-}
-select[name='selectedProject']{
-    width: 15%;
-}
 #dateContainer{
     
     display: flex;

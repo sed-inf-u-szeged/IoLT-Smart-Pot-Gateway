@@ -83,7 +83,7 @@ function initSelectors() {
                     modified_y = y + " lux";
                     break;
                 case "Plant growth":
-                    modified_y = y.toFixed(2) + " cm<sup>2</sup>";
+                    modified_y = y.toFixed(2) + " mm<sup>2</sup>";
                 default:
                     break;
             }
@@ -122,7 +122,40 @@ function initSelectors() {
         width: 200
     });
     
+    $("select[name='selectedDevice']").on('select2:select', function (e) {
+        var data = e.params.data;
+        selectedDeviceName = e.params.data.text;
+        select1check = true;
+
+        console.log(graph);
+
+
+        if(select1check == true) {
+            console.log(graph.series);
+            initGraph(selectedDeviceName,graph,legend);
+            if ( ! (selectedDeviceName == "BRC_Smartpot_1" && typeof plantgrowth_data !== 'undefined' && plantgrowth_data.length > 0)) {
+            
+                $('.rickshaw_legend .line:nth-child(8)').attr('hidden','');
+                if(graph.series.length == 8) {
+                    graph.series.pop();
+                }
+                graph.update();
     
+            } else {
+                    $('.rickshaw_legend .line:nth-child(8)').removeAttr('hidden');
+                    fillSeries_withPlantGrowthData(graph);
+                    graph.update();
+                } 
+            }
+            graph.element.style.visibility = 'visible';
+            slider.element.style.visibility = 'visible';
+            document.querySelector('#downloadContainer').style.visibility = 'visible';
+            document.querySelector('#sensorControlPanel').style.display = 'block';
+        
+
+      
+
+    });
 
 
     $( "#graph_slider" ).on( "slidechange", function( event, ui ) {
@@ -170,41 +203,6 @@ function initSelectors() {
       for (let i = 0; i < sensors.length; i++) {
           observer.observe(sensors[i], {attributes: true});
       }
-
-
-      $("select[name='selectedDevice']").on('select2:select', function (e) {
-        var data = e.params.data;
-        selectedDeviceName = e.params.data.text;
-        select1check = true;
-
-        console.log(graph);
-
-
-        if(select1check == true) {
-            console.log(graph.series);
-            initGraph(selectedDeviceName,graph,legend);
-            if ( ! (selectedDeviceName == "BRC_Smartpot_1" && typeof plantgrowth_data !== 'undefined' && plantgrowth_data.length > 0)) {
-            
-                $('.rickshaw_legend .line:nth-child(8)').attr('hidden','');
-                $('.rickshaw_legend .line:nth-child(8)').addClass('disabled');
-                graph.update();
-    
-            } else {
-                    $('.rickshaw_legend .line:nth-child(8)').removeAttr('hidden');
-                    $('.rickshaw_legend .line:nth-child(8)').removeClass('disabled');
-                    fillSeries_withPlantGrowthData(graph);
-                    graph.update();
-                } 
-            }
-            graph.element.style.visibility = 'visible';
-            slider.element.style.visibility = 'visible';
-            document.querySelector('#downloadContainer').style.visibility = 'visible';
-            document.querySelector('#sensorControlPanel').style.display = 'block';
-        
-
-      
-
-    });
       
 }
 
@@ -248,25 +246,17 @@ function initGraph(Devicename,graph,legend) {
          graph.series[i].data = tempdata[i];
     }
     
-    if (plantgrowth_data.length == 0) {
-        graph.series.pop();
-    } else {
-        graph.series[7].disable();
-    }
-    
-
-    if ( (Devicename == "BRC_Smartpot_1" && typeof plantgrowth_data !== 'undefined' && plantgrowth_data.length > 0) ) {
+    if ( Devicename == "BRC_Smartpot_1" && typeof plantgrowth_data !== 'undefined' && plantgrowth_data.length > 0 ) {
+        if(graph.series.length == 7) {
+            let PGObject = {
+                data: [{x:0,y:0}],
+                name: "Plant growth",
+                color: "darkgreen"
+            };
+        graph.series.push(PGObject);
         fillSeries_withPlantGrowthData(graph);
-            if(graph.series[0].data.length == 0 && graph.series[7].data.length != 0) {
-                onlyPgDataIsPresent(graph);
         }
-        graph.series[7].enable();
-    } else {
-        if (graph.series[7] !== undefined) {
-            graph.series[7].data[0].x = graph.series[0].data[0].x;
-        }   
-    }
-    
+    } 
 
     graph.render();
     
@@ -301,17 +291,4 @@ function fillSeries_withPlantGrowthData(graph) {
     });
 
     graph.series[7].data = pg_data;
-}
-
-function onlyPgDataIsPresent(graph) {
-        
-    let o1 = {x: graph.series[7].data[0].x, y: NaN};
-
-        for (let i = 0; i <= 6; i++) {
-            graph.series[i].data.push(o1);
-        }
-        for (let i = 0; i <= 6; i++) {
-            graph.stackedData[i].push(o1);
-        }
-        
 }

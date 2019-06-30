@@ -14,9 +14,9 @@ app.set('views', path.join(__dirname, './views'))
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({limit: '50mb',extended:true}));
 app.set('trust proxy',1);
-app.use(session({secret: "#a2258kbCmcyP81#$$A+%##123klsTvx&@E^21KklfdXNvSMSKjeoweq125PPcbyx",
+app.use(session({secret: "#T89vX@Cjd#lfjvN#$#1tHh^=sd11//49234X&@E^21KDltsđx#$$231éáüaBsx2>ég21",
 resave:true,
 saveUninitialized:true,
 cookie: { secure: false, maxAge: 3000000 }

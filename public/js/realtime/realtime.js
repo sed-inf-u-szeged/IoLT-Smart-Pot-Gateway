@@ -7,7 +7,7 @@ var Realtime = function() {
 	var clientId="Livegraph_"+Date.now();
 
 	console.log("clientId: " + clientId);
-	var hostname = "172.16.0.4";
+	var hostname = "193.224.59.102";
 	var client;
 
 	this.initialize = function(){

@@ -12,6 +12,10 @@ $('#adatok_lekerdezese_gomb').click(function() {
 	window.location.href = link+"lekerdezes";
 });
 
+$('#plant_growth_gomb').click(function() {
+	window.location.href = link+"plant_growth";
+});
+
 $('#projektek_gomb').click(function() {
 	window.location.href = link+"projektek";
 });
@@ -31,9 +35,11 @@ $('#create_device_button').click(function() {
 $('#create_project_button').click(function() {
 	window.location.href = link+"create_project";
 });
+
 $('#modify_project_button').click(function() {
 	window.location.href = link+"modify_project";
 });
+
 
 $('button').click(function() {
 	$('button').prop('disabled',true);

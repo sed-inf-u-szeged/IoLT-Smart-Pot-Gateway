@@ -82,6 +82,7 @@ router.post('/data_query', function(req, res) {
         let dataArray = [];
         let deviceArray = [];
         let sensorNameArray = [];
+        let plantGrowthArray = [];
 
         sensorNameArray.push("Temperature [°C]");
         sensorNameArray.push("Humidity [%]");
@@ -90,6 +91,7 @@ router.post('/data_query', function(req, res) {
         sensorNameArray.push("Full light intensity [lux]");
         sensorNameArray.push("IR light intensity [lux]");
         sensorNameArray.push("Visible light intensity [lux]");
+        sensorNameArray.push("Mean plant growth [mm^2]");
 
         let datascheme = mongoose.Schema({
             Project : String,
@@ -104,6 +106,22 @@ router.post('/data_query', function(req, res) {
             "Visible light intensity [lux]" : Number
         });
 
+        let plantgrowth_datascheme = mongoose.Schema({
+            "Time" : Date,
+            "Slot_1" : Number,
+            "Slot_2" : Number,
+            "Slot_3" : Number,
+            "Slot_4" : Number,
+            "Slot_5" : Number,
+            "Slot_6" : Number,
+            "Slot_7" : Number,
+            "Slot_8" : Number,
+            "Slot_9" : Number,
+            "Slot_10" : Number,
+            "Slot_11" : Number,
+            "Slot_12" : Number
+        });
+
         let Model;
         try {
             Model = mongoose.model('Datamodel');
@@ -111,7 +129,14 @@ router.post('/data_query', function(req, res) {
             Model = mongoose.model('Datamodel',datascheme,'Adatok');
         }
 
-        Model.find({Project: req.body.selectedProject},function(err,results){
+        let Model2;
+        try {
+            Model2 = mongoose.model('PG_Datamodell');
+        } catch (error) {
+            Model2 = mongoose.model('PG_Datamodell',plantgrowth_datascheme,'Picture_analyzing');
+        }
+
+        var Promise1 = Model.find({Project: req.body.selectedProject},function(err,results){
             //Hibakezelés
             if(err) {
             console.log(err)
@@ -122,7 +147,7 @@ router.post('/data_query', function(req, res) {
                 res.redirect('/lekerdezes');
             } else {
                 results.forEach(function(datablock){
-                    console.log(datablock);
+                    //console.log(datablock);
                     //dataArray.push(datablock);
                     if(datablock.Time >= Date.parse(req.body.data_from_date) && datablock.Time <= Date.parse(req.body.data_until_date)){
                         dataArray.push(datablock);
@@ -131,13 +156,40 @@ router.post('/data_query', function(req, res) {
                         deviceArray.push(datablock.Device);
                     }
                 });
-                console.log(deviceArray);
-                mongoose.connection.close();
-                res.render('Datagraph/datagraph' , { title: 'Internet of Living Things - Smartpot', 'projectName' : req.body.selectedProject, 
-                    'dataArray' : dataArray, 'deviceArray' : deviceArray, 'sensorNameArray' : sensorNameArray } );
+                //console.log(deviceArray);
+                
             }
         });
 
+        var Promise2 = Model2.find({},function(err,results){
+            if(err) {
+                console.log(err)
+                console.log("Lekérdezési hiba történt.");
+                mongoose.connection.close();
+                } else if (results.length < 1) {
+                    console.log("Project has no data...");
+                    res.redirect('/lekerdezes');
+                } else {
+                    results.forEach(function(datablock){
+                        if(Date.parse(datablock.Time) >= Date.parse(req.body.data_from_date) && Date.parse(datablock.Time) <= Date.parse(req.body.data_until_date)){
+                            plantGrowthArray.push(datablock);
+                        }        
+                    });
+                }
+
+        });
+
+        Promise.all([Promise1, Promise2]).then(function() {
+            mongoose.connection.close();
+            //console.log(plantGrowthArray);
+            plantGrowthArray.sort(function(a, b) {
+                a = new Date(a.Time);
+                b = new Date(b.Time);
+                return a>b ? 1 : a<b ? -1 : 0;
+            });
+                res.render('Datagraph/datagraph' , { title: 'Internet of Living Things - Smartpot', 'projectName' : req.body.selectedProject, 
+                    'dataArray' : dataArray, 'deviceArray' : deviceArray, 'sensorNameArray' : sensorNameArray, 'plantgrowth_data' : plantGrowthArray } );
+        });
 
 
     } else {
@@ -152,7 +204,8 @@ router.post("/downloadDataInFile", function(req,res){
 
     var data = JSON.parse(req.body.dataArray);
     var sensors = JSON.parse(req.body.sensorArray);
-    console.log(sensors);
+    var pg_data = JSON.parse(req.body.plantgrowth_data);
+    //console.log(sensors);
 
     // Converting the dates back from the dataset to NodeJS date pattern.
     data.forEach(sensorDataSet => {
@@ -162,26 +215,65 @@ router.post("/downloadDataInFile", function(req,res){
         });
     });
 
+    //console.log(data);
+    //console.log(pg_data);
+
     // Writing to file begins
     let writeStream = fs.createWriteStream(__dirname+'/../users/'+req.session.user+'/data.txt',{flags: 'w+'});
     let helpCounter = 0;
 
+    let pg_help_startdate = new Date("9999-12-17T03:24:00");
+    let pg_help_enddate = new Date(0);
+
     for (let sensorName in sensors) {
         if (sensors.hasOwnProperty(sensorName)) {
-            console.log(sensorName + " -> " + sensors[sensorName]);
-            if(sensors[sensorName] == true){
+            //console.log(sensorName + " -> " + sensors[sensorName]);
+            if(sensors[sensorName] == true) {
                 writeStream.write(sensorName+":\n");
+                console.log(data[helpCounter]);
                 data[helpCounter].forEach(sensorData => {
+                    if(pg_help_startdate > sensorData.x) {
+                        pg_help_startdate = Date.parse(sensorData.x);
+                    }
+                    if(pg_help_enddate < sensorData.x) {
+                        pg_help_enddate = Date.parse(sensorData.x);
+                    }
                     writeStream.write("\t"+sensorData.x+"\t"+sensorData.y+"\n");
                 });
                 helpCounter++;
             }
         }
+
     }
     writeStream.end();
 
+
+
     writeStream.on("finish", () => {
-        res.download(__dirname+'/../users/'+req.session.user+'/data.txt');
+
+        let newwriteStream = fs.createWriteStream(__dirname+'/../users/'+req.session.user+'/data.txt',{flags: 'a+'});
+            if(sensors["Plant growth"] == true) {
+            newwriteStream.write("Plant growth data by slot:\n");
+                pg_data.forEach(pg_datablock => {
+                if(Date.parse(pg_datablock.Time) >= pg_help_startdate && Date.parse(pg_datablock.Time) <= pg_help_enddate) {
+                    newwriteStream.write(pg_datablock.Time+"\t"+pg_datablock.Slot_1+"\t"+pg_datablock.Slot_2+"\t"+pg_datablock.Slot_3+"\t"+pg_datablock.Slot_4+"\t"+pg_datablock.Slot_5+"\t"+pg_datablock.Slot_6+"\t"+
+                        pg_datablock.Slot_7+"\t"+pg_datablock.Slot_8+"\t"+pg_datablock.Slot_9+"\t"+pg_datablock.Slot_10+"\t"+pg_datablock.Slot_11+"\t"+pg_datablock.Slot_12+"\n");
+                }
+            });
+            }
+            newwriteStream.end();
+
+            newwriteStream.on("error", (e) => {
+                res.send(e);
+            });
+
+            newwriteStream.on("finish", () => {
+                res.download(__dirname+'/../users/'+req.session.user+'/data.txt');
+            });
+    });
+
+    writeStream.on("error", (e) => {
+        res.send(e);
     });
     
     
