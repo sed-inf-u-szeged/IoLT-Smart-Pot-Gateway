@@ -2,4 +2,4 @@ FROM eclipse-mosquitto:latest
 
 WORKDIR /mosquitto
 
-COPY ./mosquitto.conf ./mosquitto.conf
+COPY ./mosquitto.conf ./config/mosquitto.conf
