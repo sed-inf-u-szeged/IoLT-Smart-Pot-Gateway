@@ -1,3 +1,4 @@
+
 var subscribeTopic = "";
 
 var Realtime = function() {
@@ -7,7 +8,16 @@ var Realtime = function() {
 	var clientId="Livegraph_"+Date.now();
 
 	console.log("clientId: " + clientId);
-	var hostname = "172.16.0.4";
+
+
+	//var hostname = "172.16.0.4";
+
+	
+	console.log("HOSTNAME window.location.hostname: " + window.location.hostname);
+	
+
+	var hostname = window.location.hostname;
+
 	var client;
 
 	this.initialize = function(){
